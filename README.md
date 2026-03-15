@@ -12,8 +12,8 @@
 
 Rationale: Covers 15% search + 10% UI/templates; employer usability.
 
-# PROJECT STRUCTURE
-
+## 📁 Project Structure
+```bash
 CV-online
 │
 ├── app
@@ -46,3 +46,5 @@ CV-online
 │
 └── database
     └── cv_online.sql
+    
+```
