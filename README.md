@@ -11,3 +11,38 @@
 4.Integrate DB queries; test filters/sorting.
 
 Rationale: Covers 15% search + 10% UI/templates; employer usability.
+
+# PROJECT STRUCTURE
+
+CV-online
+│
+├── app
+│   ├── controllers
+│   │   └── EmployerController.php
+│   │
+│   ├── services
+│   │   └── CVSearchService.php
+│   │
+│   └── functions
+│
+├── config
+│   └── DataConfig.php
+│
+├── public
+│   ├── index.php
+│   ├── css
+│   └── js
+│
+├── resources
+│   └── views
+│       ├── employer
+│       │   ├── search.php
+│       │   └── result.php
+│       │
+│       └── cv_templates
+│           ├── modern.php
+│           ├── classic.php
+│           └── minimal.php
+│
+└── database
+    └── cv_online.sql
