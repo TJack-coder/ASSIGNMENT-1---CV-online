@@ -14,6 +14,10 @@ class CvController extends Controller
 {
     public function create()
     {
+        if (Auth::user()->role !== 'job_seeker') {
+            abort(403, 'Only job seekers can manage CVs');
+        }
+
         // Pass all reference data for dropdowns to the view
         return view('seeker.cv.form', [
             'categories' => \App\Models\CvCategory::all(),
@@ -35,6 +39,10 @@ class CvController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'job_seeker') {
+            abort(403, 'Only job seekers can manage CVs');
+        }
+        
         $request->validate([
             'full_name' => 'required',
             'date_of_birth' => 'required|date',
