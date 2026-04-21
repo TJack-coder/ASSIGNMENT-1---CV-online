@@ -1,25 +1,31 @@
 <?php
 
-    require_once "../app/controllers/Admin.php";
+require_once __DIR__ . '/../app/controllers/Admin.php';
 
-    $uri = $_SERVER['REQUEST_URI'];
-    $method = $_SERVER['REQUEST_METHOD'];
+$route = $_GET['route'] ?? 'home';
 
-    $admin = new AdminController();
+switch ($route) {
+    case 'admin/dashboard':
+        $controller = new AdminController();
+        $controller->dashboard();
+        break;
 
-    // ROUTES
-    if ($uri === '/admin/skills' && $method === 'GET') {
-        $admin->getAll();
-    }
+    case 'admin/manage':
+        $controller = new AdminController();
+        $controller->manage();
+        break;
 
-    elseif ($uri === '/admin/skills/create' && $method === 'POST') {
-        $admin->create();
-    }
+    case 'admin/create':
+        $controller = new AdminController();
+        $controller->create();
+        break;
 
-    elseif ($uri === '/admin/skills/delete' && $method === 'POST') {
-        $admin->delete();
-    }
+    case 'admin/delete':
+        $controller = new AdminController();
+        $controller->delete();
+        break;
 
-    else {
-        echo "404 Not Found";
-    }
+    default:
+        echo "410 Not Found";
+        break;
+}

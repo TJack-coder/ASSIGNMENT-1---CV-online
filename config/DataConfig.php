@@ -14,7 +14,7 @@ class DataConfig
     private $db_name = 'cv_online';
     private $user = 'root';
     private $password = '';
-    private $port = '3307';
+    private $port = '3306';
 
     private function __construct()
     {

@@ -1,80 +1,86 @@
 <?php
 
-require_once "../app/models/AdminModel.php";
-require_once "../app/services/AdminService.php";
-require_once "../config/DataConfig.php";
-require_once "../app/middleware/AdminMiddleware.php";
+require_once __DIR__ . '/../services/AdminService.php';
+require_once __DIR__ . '/../middleware/adminAuth.php';
 
 class AdminController {
-
     private $service;
 
-    public function __construct(){
-        $db = DataConfig::getInstance()->getConnection();
-
-        $model = new AdminModel($db);
-        $this->service = new AdminService($model);
+    public function __construct() {
+        $this->service = new AdminService();
     }
 
-    // GET /admin?table=skills
-    public function getAll(){
-        AdminMiddleware::handle();
+    public function dashboard() {
+        // AdminMiddleware::handle();
 
-        $table = $_GET['table'] ?? 'skills';
+        $currentPage = 'dashboard';
+        $currentTable = '';
+        $pageTitle = 'Admin Dashboard';
 
-        try {
-            $data = $this->service->getAll($table);
+        $allowedTables = $this->service->getAllowedTables();
+        $tableCounts = [];
 
-            echo json_encode([
-                "status" => "success",
-                "data" => $data
-            ]);
-
-        } catch (Exception $e){
-            http_response_code(400);
-            echo json_encode([
-                "error" => $e->getMessage()
-            ]);
+        foreach ($allowedTables as $table) {
+            $tableCounts[$table] = count($this->service->getAll($table));
         }
+
+        require __DIR__ . '/../../resources/admin/dashboard.php';
     }
 
-    // POST /admin/create
-    public function create(){
-        AdminMiddleware::handle();
+    public function manage() {
+        // AdminMiddleware::handle();
+
+        $table = $_GET['table'] ?? 'categories';
+        $items = $this->service->getAll($table);
+
+        $currentPage = 'manage';
+        $currentTable = $table;
+        $pageTitle = 'Manage ' . ucwords(str_replace('_', ' ', $table));
+
+        require __DIR__ . '/../../resources/admin/manage.php';
+    }
+
+    public function create() {
+        // AdminMiddleware::handle();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo 'Method Not Allowed';
+            exit;
+        }
 
         $table = $_POST['table'] ?? '';
         $name = $_POST['name'] ?? '';
 
         try {
             $this->service->create($table, $name);
-
-            echo json_encode(["status" => "created"]);
-
-        } catch (Exception $e){
-            http_response_code(400);
-            echo json_encode([
-                "error" => $e->getMessage()
-            ]);
+            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=created');
+            exit;
+        } catch (Exception $e) {
+            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 
-    // POST /admin/delete
-    public function delete(){
-        AdminMiddleware::handle();
+    public function delete() {
+        // AdminMiddleware::handle();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo 'Method Not Allowed';
+            exit;
+        }
 
         $table = $_POST['table'] ?? '';
         $id = $_POST['id'] ?? '';
 
         try {
             $this->service->delete($table, $id);
-
-            echo json_encode(["status" => "deleted"]);
-
-        } catch (Exception $e){
-            http_response_code(400);
-            echo json_encode([
-                "error" => $e->getMessage()
-            ]);
+            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=deleted');
+            exit;
+        } catch (Exception $e) {
+            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 }
