@@ -135,13 +135,10 @@ class CVSearchService
         /* ---------- Pagination ---------- */
 
         $offset = ($page - 1) * $perPage;
-
         $sql .= " LIMIT :limit OFFSET :offset";
-
         $stmt = $this->db->prepare($sql);
 
         /* bind filters */
-
         foreach ($params as $key => $value) {
 
             $stmt->bindValue($key, $value);
@@ -161,9 +158,26 @@ class CVSearchService
     public function getCVById($cvId)
     {
         $stmt = $this->db->prepare("
-            SELECT *
-            FROM cvs
-            WHERE id = ?
+            SELECT 
+            c.id,
+            c.user_id,
+            c.full_name,
+            c.birthday,
+            c.gender,
+            c.email,
+            c.phone_number,
+            c.address,
+            c.postal_code,
+            cat.name AS category_name,
+            co.name AS country_name,
+            ci.name AS city_name,
+            d.name AS district_name
+            FROM cvs c
+            INNER JOIN categories cat ON c.categories_id = cat.id
+            INNER JOIN countries co ON c.countries_id = co.id
+            INNER JOIN cities ci ON c.cities_id = ci.id
+            LEFT JOIN district d ON c.district_id = d.id
+            WHERE c.id = ?;
         ");
 
         $stmt->execute([$cvId]);
@@ -175,41 +189,91 @@ class CVSearchService
         }
 
         /* work history */
-
         $stmt = $this->db->prepare("
-            SELECT *
-            FROM work_histories
-            WHERE cv_id = ?
+            SELECT
+            w.id,
+            w.cv_id,
+            jt.name AS job_title_name,
+            et.name AS employment_type_name,
+            ind.name AS industry_name,
+            w.company_name,
+            w.start_year,
+            w.end_year,
+            w.description
+            FROM work_histories w
+            INNER JOIN job_title jt ON w.job_title_id = jt.id
+            INNER JOIN employment_types et ON w.employment_types_id = et.id
+            INNER JOIN industries ind ON w.industries_id = ind.id
+            WHERE w.cv_id = ?
+            ORDER BY w.start_year DESC, w.id DESC;
         ");
-
         $stmt->execute([$cvId]);
-
         $cv['workHistory'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         /* education */
-
         $stmt = $this->db->prepare("
-            SELECT *
-            FROM educations
-            WHERE cv_id = ?
+            SELECT
+            e.id,
+            e.cv_id,
+            i.name AS institution_name,
+            deg.name AS degree_name,
+            m.name AS major_name,
+            e.start_year,
+            e.end_year,
+            e.description
+            FROM educations e
+            INNER JOIN institutions i ON e.institution_id = i.id
+            INNER JOIN degrees deg ON e.degree_level_id = deg.id
+            INNER JOIN majors m ON e.major_id = m.id
+            WHERE e.cv_id = ?
+            ORDER BY e.start_year DESC, e.id DESC;
         ");
 
         $stmt->execute([$cvId]);
-
         $cv['education'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         /* skills */
-
         $stmt = $this->db->prepare("
-            SELECT skills.name, cv_skills.proficients_id
-            FROM cv_skills
-            JOIN skills ON skills.id = cv_skills.skills_id
-            WHERE cv_skills.cv_id = ?
+            SELECT
+            cs.id,
+            cs.cv_id,
+            s.name AS skill_name,
+            p.name AS proficiency_name
+            FROM cv_skills cs
+            INNER JOIN skills s ON cs.skills_id = s.id
+            INNER JOIN proficients p ON cs.proficients_id = p.id
+            WHERE cs.cv_id = ?
+            ORDER BY cs.id ASC;
         ");
-
         $stmt->execute([$cvId]);
-
         $cv['skills'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        /*certificates*/
+        $stmt = $this->db->prepare("
+            SELECT *
+            FROM certificates
+            WHERE cv_id = ?
+        ");
+        $stmt->execute([$cvId]);
+        $cv['certificates'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        /* category */
+        $stmt = $this->db->prepare("
+            SELECT
+            c.id,
+            c.cv_id,
+            cn.name AS certificate_name,
+            o.name AS organization_name,
+            c.year_issued,
+            c.description
+            FROM certificates c
+            INNER JOIN certificate_name cn ON c.certificate_name_id = cn.id
+            INNER JOIN organizations o ON c.organizations_id = o.id
+            WHERE c.cv_id = ?
+            ORDER BY c.year_issued DESC, c.id DESC;
+        ");
+        $stmt->execute([$cvId]);
+        $cv['category_name'] = $stmt->fetchColumn();
 
         return $cv;
     }

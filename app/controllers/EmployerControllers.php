@@ -73,7 +73,6 @@ class EmployerController
     public function viewCV($cvId)
     {
         $template = $_GET['template'] ?? 'modern';
-
         // Validate template
         $validTemplates = ['modern', 'classic', 'minimal'];
         if (!in_array($template, $validTemplates)) {
