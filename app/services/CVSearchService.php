@@ -28,127 +28,126 @@ class CVSearchService
             cities.name AS city_name,
             categories.name AS category_name
         FROM cvs
-
+    
         LEFT JOIN users ON users.id = cvs.user_id
         LEFT JOIN countries ON countries.id = cvs.countries_id
         LEFT JOIN cities ON cities.id = cvs.cities_id
         LEFT JOIN categories ON categories.id = cvs.categories_id
-
+    
         LEFT JOIN cv_skills ON cv_skills.cv_id = cvs.id
         LEFT JOIN skills ON skills.id = cv_skills.skills_id
-
-        LEFT JOIN educations ON educations.cv_id = cvs.id
-
+    
+        LEFT JOIN educations e ON e.cv_id = cvs.id
+        LEFT JOIN work_histories wh ON wh.cv_id = cvs.id
+        LEFT JOIN certificates cert ON cert.cv_id = cvs.id
+    
         WHERE 1=1
         ";
-
+    
         $params = [];
-
+    
         /* ---------- Keyword search ---------- */
-
+    
         if (!empty($filters['keyword'])) {
-
-            $sql .= " AND (users.name LIKE :keyword OR cvs.full_name LIKE :keyword)";
-
+            $sql .= "
+                AND (
+                    cvs.full_name LIKE :keyword
+                    OR cvs.email LIKE :keyword
+                    OR cvs.phone_number LIKE :keyword
+                    OR cvs.address LIKE :keyword
+                    OR cities.name LIKE :keyword
+                    OR countries.name LIKE :keyword
+                    OR wh.company_name LIKE :keyword
+                    OR wh.description LIKE :keyword
+                    OR e.description LIKE :keyword
+                    OR cert.description LIKE :keyword
+                )
+            ";
+    
             $params[':keyword'] = '%' . $filters['keyword'] . '%';
         }
-
+    
         /* ---------- Category ---------- */
-
+    
         if (!empty($filters['category_id'])) {
-
-            $sql .= " AND cvs.categories_id = :category";
-
-            $params[':category'] = $filters['category_id'];
+            $sql .= " AND cvs.categories_id = :category_id";
+            $params[':category_id'] = $filters['category_id'];
         }
-
+    
         /* ---------- Country ---------- */
-
+    
         if (!empty($filters['country_id'])) {
-
-            $sql .= " AND cvs.countries_id = :country";
-
-            $params[':country'] = $filters['country_id'];
+            $sql .= " AND cvs.countries_id = :country_id";
+            $params[':country_id'] = $filters['country_id'];
         }
-
+    
         /* ---------- City ---------- */
-
+    
         if (!empty($filters['city'])) {
-
             $sql .= " AND cities.name LIKE :city";
-
             $params[':city'] = '%' . $filters['city'] . '%';
         }
-
+    
         /* ---------- Degree ---------- */
-
+    
         if (!empty($filters['degree_level'])) {
-
-            $sql .= " AND educations.degree_level_id = :degree";
-
-            $params[':degree'] = $filters['degree_level'];
+            $sql .= " AND e.degree_level_id = :degree_level";
+            $params[':degree_level'] = $filters['degree_level'];
         }
-
+    
         /* ---------- Skills ---------- */
-
+    
         if (!empty($filters['skills'])) {
-
-            $skillConditions = [];
-
+            $skillPlaceholders = [];
+    
             foreach ($filters['skills'] as $i => $skillId) {
-
-                $param = ":skill$i";
-
-                $skillConditions[] = $param;
-
+                $param = ":skill_$i";
+                $skillPlaceholders[] = $param;
                 $params[$param] = $skillId;
             }
-
-            $sql .= " AND skills.id IN (" . implode(',', $skillConditions) . ")";
+    
+            $sql .= " AND skills.id IN (" . implode(',', $skillPlaceholders) . ")";
         }
-
+    
         /* ---------- Proficiency ---------- */
-
+    
         if (!empty($filters['min_proficiency'])) {
-
             $sql .= " AND cv_skills.proficients_id >= :proficiency";
-
             $params[':proficiency'] = $filters['min_proficiency'];
         }
-
+    
         /* ---------- Sorting ---------- */
-
+    
         switch ($filters['sort_by'] ?? 'recent') {
-
+    
             case 'alphabetical':
                 $sql .= " ORDER BY cvs.full_name ASC";
                 break;
-
+            
             case 'experience':
-                $sql .= " ORDER BY cvs.id DESC"; // placeholder
+                $sql .= " ORDER BY cvs.id DESC"; // bạn có thể cải tiến sau
                 break;
-
+            
             default:
-                $sql .= " ORDER BY cvs.id DESC"; // recent
+                $sql .= " ORDER BY cvs.id DESC";
         }
-
+            
         /* ---------- Pagination ---------- */
-
+            
         $offset = ($page - 1) * $perPage;
         $sql .= " LIMIT :limit OFFSET :offset";
+            
         $stmt = $this->db->prepare($sql);
-
-        /* bind filters */
+            
         foreach ($params as $key => $value) {
-
             $stmt->bindValue($key, $value);
         }
-
+            
         $stmt->bindValue(':limit', (int)$perPage, PDO::PARAM_INT);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-
+            
         $stmt->execute();
-
+            
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
