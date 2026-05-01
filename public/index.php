@@ -14,8 +14,7 @@ $database = DataConfig::getInstance()->getConnection();
 $employerController = new EmployerController($database);
 $adminController = new AdminController();
 
-$route = $_GET['route'] ?? 'home';
-
+$route = $_GET['route'] ?? 'employer/search';
 switch ($route) {
     case 'admin/dashboard':
         $adminController->dashboard();
