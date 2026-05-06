@@ -8,12 +8,15 @@
 <body>
 
 <div class="page-container">
-    <div class="page-header">
-        <h1>Search CVs</h1>
-        <p>
-            Search and filter candidate CVs by keyword, category, location, skills, proficiency,
-            degree level, and sorting options.
-        </p>
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1>Search CVs</h1>
+            <p>
+                Search and filter candidate CVs by keyword, category, location, skills, proficiency,
+                degree level, and sorting options.
+            </p>
+        </div>
+        <a href="index.php?route=auth/logout" class="btn btn-secondary" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-weight: 600;">Logout</a>
     </div>
 
     <div class="search-wrapper">
@@ -24,7 +27,7 @@
                 Use the fields below to quickly narrow down CVs based on employer requirements.
             </p>
 
-            <form method="POST" action="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/search/result">
+            <form method="POST" action="index.php?route=employer/search/result">
 
                 <!-- Keyword -->
                 <div class="form-group">

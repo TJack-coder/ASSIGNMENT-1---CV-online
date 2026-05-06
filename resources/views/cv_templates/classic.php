@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classic CV</title>
-    <link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/cv_classic.css">
+    <link rel="stylesheet" href="css/cv_classic.css">
 </head>
 <body>
 
 <div class="topbar">
-    <a class="back-btn" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/search">
+    <a class="back-btn" href="index.php?route=employer/search">
         ← Back to Search
     </a>
 
     <div class="template-switcher">
-        <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=modern">Modern</a>
-        <a class="active" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=classic">Classic</a>
-        <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=minimal">Minimal</a>
+        <a href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=modern">Modern</a>
+        <a class="active" href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=classic">Classic</a>
+        <a href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=minimal">Minimal</a>
     </div>
 </div>
 

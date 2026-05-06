@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/search_result.css">
+    <link rel="stylesheet" href="css/search_result.css">
 </head>
 
 <div class="results-page">
@@ -14,7 +14,7 @@
             <p class="results-subtitle">Browse matching candidate CVs based on your selected filters.</p>
         </div>
 
-        <a class="back-btn" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/search">
+        <a class="back-btn" href="index.php?route=employer/search">
             Back to Search
         </a>
     </div>
@@ -82,15 +82,15 @@
                     </div>
 
                     <div class="cv-actions">
-                        <a class="btn-primary" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=modern">
+                        <a class="btn-primary" href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=modern">
                             View Modern CV
                         </a>
 
                         <div class="template-links">
-                            <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=classic">
+                            <a href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=classic">
                                 Classic
                             </a>
-                            <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=minimal">
+                            <a href="index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=minimal">
                                 Minimal
                             </a>
                         </div>
@@ -103,7 +103,7 @@
             <h2>No CVs found</h2>
             <p>No candidates matched your search criteria. Try adjusting your filters and search again.</p>
 
-            <a class="back-btn" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/search">
+            <a class="back-btn" href="index.php?route=employer/search">
                 Return to Search
             </a>
         </div>

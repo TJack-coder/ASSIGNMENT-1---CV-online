@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern CV</title>
-    <link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/cv_modern.css">
+    <link rel="stylesheet" href="css/cv_modern.css">
 </head>
 <body>
 
+<?php $id = $cv['id'] ?? $cv['cv_id'] ?? ''; ?>
 <div class="topbar">
     <div class="topbar-inner">
-        <a class="back-btn" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/search">
+        <a class="back-btn" href="index.php?route=employer/search">
             ← Back to Search
         </a>
 
         <div class="template-switcher">
-            <a class="active" href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=modern">Modern</a>
-            <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=classic">Classic</a>
-            <a href="/ASSIGNMENT-1---CV-online/public/index.php?route=employer/cv&id=<?= $cv['id'] ?>&template=minimal">Minimal</a>
+            <a class="active" href="index.php?route=employer/cv&id=<?= htmlspecialchars($cv['id'] ?? '') ?>&template=modern">Modern</a>
+            <a href="index.php?route=employer/cv&id=<?= htmlspecialchars($cv['id'] ?? '') ?>&template=classic">Classic</a>
+            <a href="index.php?route=employer/cv&id=<?= htmlspecialchars($cv['id'] ?? '') ?>&template=minimal">Minimal</a>
         </div>
     </div>
+</div>
+
+<div class="template-actions">
+    <a class="change-template" href="?route=seeker/cv/templates<?= $id ? '&id=' . urlencode($id) : '' ?>">Change Template</a>
+    <a class="edit-cv" href="?route=seeker/cv/create<?= $id ? '&id=' . urlencode($id) : '' ?>">Edit CV</a>
 </div>
 
 <div class="cv-modern">
