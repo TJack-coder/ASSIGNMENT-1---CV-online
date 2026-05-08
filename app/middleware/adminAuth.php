@@ -6,7 +6,7 @@ class AdminMiddleware {
             session_start();
         }
 
-        $bypassAdminAuth = true; // đổi thành false khi test xong
+        $bypassAdminAuth = false; // đổi thành false khi test xong
 
         if ($bypassAdminAuth) {
             if (!isset($_SESSION['users'])) {
@@ -23,10 +23,9 @@ class AdminMiddleware {
             exit;
         }
 
-        if (!isset($_SESSION['users']['role']) || $_SESSION['users']['role'] !== 'admin') {
-            http_response_code(403);
-            echo "Access denied";
+        if (isset($_SESSION['users']) && $_SESSION['users']['role'] === 'admin') {
+            header("Location: /GROUP/resource/admin/dashboard.php");
             exit;
-        }
+        } 
     }
 }
