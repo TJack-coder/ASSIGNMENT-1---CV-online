@@ -4,12 +4,34 @@
     padding: 0;
 }
 
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #eef2ff;
+    --bg: #f8fafc;
+    --bg-gradient: linear-gradient(135deg, #eef2ff, #f8fafc);
+    --card: #ffffff;
+    --text-main: #0f172a;
+    --text-body: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius-sm: 12px;
+    --radius-md: 16px;
+    --radius-lg: 20px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-    color: #1e293b;
+    background: var(--bg-gradient);
+    color: var(--text-body);
     min-height: 100vh;
     padding: 40px 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .page-container {
@@ -24,13 +46,13 @@ body {
 .page-header h1 {
     font-size: 36px;
     margin-bottom: 10px;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .page-header p {
-    color: #475569;
+    color: var(--text-muted);
     font-size: 16px;
-    max-width: 700px;
+    max-width: 760px;
     line-height: 1.6;
 }
 
@@ -43,24 +65,25 @@ body {
 
 .search-card,
 .preview-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
     padding: 28px;
 }
 
 .search-card h2,
 .preview-card h2 {
-    font-size: 22px;
+    font-size: 24px;
     margin-bottom: 8px;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .card-subtitle {
     font-size: 14px;
-    color: #64748b;
+    color: var(--text-muted);
     margin-bottom: 24px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .form-group {
@@ -70,9 +93,9 @@ body {
 .form-group label,
 .section-label {
     display: block;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
-    color: #1e293b;
+    color: var(--text-body);
 }
 
 input[type="text"],
@@ -80,17 +103,17 @@ select {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #cbd5e1;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     font-size: 15px;
-    background: #fff;
-    color: #1e293b;
+    background: #ffffff;
+    color: var(--text-body);
     transition: 0.2s ease;
 }
 
 input[type="text"]:focus,
 select:focus {
     outline: none;
-    border-color: #4f46e5;
+    border-color: var(--primary);
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
 }
 
@@ -102,8 +125,8 @@ select:focus {
     overflow-y: auto;
     padding: 14px;
     border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    background: #f8fafc;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
 }
 
 .skill-item {
@@ -117,7 +140,7 @@ select:focus {
 .skill-item input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: #4f46e5;
+    accent-color: var(--primary);
 }
 
 .form-actions {
@@ -128,27 +151,27 @@ select:focus {
 
 .btn {
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     padding: 12px 18px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 .btn-primary {
-    background: #4f46e5;
-    color: white;
+    background: var(--primary);
+    color: #ffffff;
     flex: 1;
 }
 
 .btn-primary:hover {
-    background: #4338ca;
+    background: var(--primary-dark);
 }
 
 .btn-secondary {
     background: #e2e8f0;
-    color: #1e293b;
+    color: var(--text-body);
 }
 
 .btn-secondary:hover {
@@ -163,16 +186,16 @@ select:focus {
 }
 
 .preview-box {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     padding: 18px;
 }
 
 .preview-box h3 {
     font-size: 16px;
     margin-bottom: 8px;
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .preview-box p {
@@ -184,7 +207,7 @@ select:focus {
 .highlight-box {
     margin-top: 18px;
     padding: 18px;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     background: linear-gradient(135deg, #ede9fe, #eef2ff);
     border: 1px solid #ddd6fe;
 }
@@ -217,6 +240,10 @@ select:focus {
 }
 
 @media (max-width: 500px) {
+    body {
+        padding: 24px 16px;
+    }
+
     .page-header h1 {
         font-size: 28px;
     }

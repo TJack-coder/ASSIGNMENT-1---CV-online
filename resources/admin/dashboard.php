@@ -7,7 +7,7 @@ $currentPage = 'dashboard';
 $currentTable = '';
 $pageTitle = 'Admin Dashboard';
 
-$base = '/GROUP/public/index.php';
+$base = '/ASSIGNMENT-1---CV-online/public/index.php';
 
 /*
 |------------------------------------------------------------------
@@ -37,7 +37,7 @@ $tableCounts = $tableCounts ?? [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel= "stylesheet" href="/GROUP/public/css/admin.css">
+    <link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/admin.css">
 <body>
 
     <div class="admin-layout">
@@ -108,7 +108,7 @@ $tableCounts = $tableCounts ?? [
                         <tbody>
                             <?php foreach ($tableCounts as $tableName => $count): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($tableName) ?></td>
+                                    <td><?= strtoupper(htmlspecialchars($tableName)) ?></td>
                                     <td><?= (int)$count ?></td>
                                     <td>
                                         <a href="<?= $base ?>?route=admin/manage&table=<?= urlencode($tableName) ?>">

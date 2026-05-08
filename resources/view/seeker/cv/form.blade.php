@@ -90,7 +90,6 @@ a{text-decoration:none;color:inherit}.app{width:min(1440px,calc(100% - 36px));ma
                 <a class="step" href="#cert"><span class="step-num">F</span><strong>Certificates</strong></a>
                 <a class="step" href="#skills"><span class="step-num">G</span><strong>Skills</strong></a>
             </nav>
-            <div class="side-note"><strong>Tip:</strong> các dropdown lấy từ bảng reference trong database. Nếu list rỗng, hãy thêm dữ liệu trong phpMyAdmin.</div>
         </aside>
 
         <main class="form-card">

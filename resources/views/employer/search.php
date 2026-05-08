@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search CVs</title>
-<link rel="stylesheet" href="/ASSIGNMENT-1---CV-online-main/public/css/employer.css"></head>
+<link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/employer.css"></head>
 <body>
 
 <div class="page-container">

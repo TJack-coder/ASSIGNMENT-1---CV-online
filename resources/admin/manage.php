@@ -7,7 +7,7 @@ $currentPage = 'manage';
 $currentTable = $currentTable ?? ($_GET['table'] ?? '');
 $pageTitle = 'Manage ' . ucwords(str_replace('_', ' ', $currentTable));
 
-$base = '/GROUP/public/index.php';
+$base = '/ASSIGNMENT-1---CV-online/public/index.php';
 
 $items = $items ?? [];
 $success = $_GET['success'] ?? '';
@@ -24,7 +24,7 @@ function formatTableName($tableName) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <link rel="stylesheet" href="/GROUP/public/css/admin.css">
+    <link rel="stylesheet" href="/ASSIGNMENT-1---CV-online/public/css/admin.css">
 </head>
 <body>
 

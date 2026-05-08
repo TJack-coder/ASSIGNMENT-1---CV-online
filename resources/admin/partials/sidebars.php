@@ -3,7 +3,7 @@ $currentPage = $currentPage ?? '';
 $currentTable = $currentTable ?? '';
 
 // 👉 CHỈNH CHỖ NÀY 1 LẦN DUY NHẤT
-$base = '/GROUP/public/index.php';
+$base = '/ASSIGNMENT-1---CV-online/public/index.php';
 
 function isActive($type, $key, $currentPage, $currentTable) {
     if ($type === 'page' && $currentPage === $key) return 'active';

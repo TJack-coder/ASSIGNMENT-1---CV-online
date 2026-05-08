@@ -1,7 +1,7 @@
 <?php
 $pageTitle = $pageTitle ?? 'Admin Panel';
 $adminName = $_SESSION['users']['name'] ?? 'Admin';
-$base = '/GROUP/public/index.php';
+$base = '/ASSIGNMENT-1---CV-online/public/index.php';
 ?>
 
 <header class="admin-topbar">

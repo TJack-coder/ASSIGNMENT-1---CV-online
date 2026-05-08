@@ -54,10 +54,10 @@ class AdminController {
 
         try {
             $this->service->create($table, $name);
-            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=created');
+            header('Location: /ASSIGNMENT-1---CV-online/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=created');
             exit;
         } catch (Exception $e) {
-            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
+            header('Location: /ASSIGNMENT-1---CV-online/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
             exit;
         }
     }
@@ -76,10 +76,10 @@ class AdminController {
 
         try {
             $this->service->delete($table, $id);
-            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=deleted');
+            header('Location: /ASSIGNMENT-1---CV-online/public/index.php?route=admin/manage&table=' . urlencode($table) . '&success=deleted');
             exit;
         } catch (Exception $e) {
-            header('Location: /GROUP/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
+            header('Location: /ASSIGNMENT-1---CV-online/public/index.php?route=admin/manage&table=' . urlencode($table) . '&error=' . urlencode($e->getMessage()));
             exit;
         }
     }

@@ -19,7 +19,7 @@ class AdminMiddleware {
         }
 
         if (!isset($_SESSION['users'])) {
-            header("Location: /GROUP/public/index.php?route=login");
+            header("Location: /ASSIGNMENT-1---CV-online/public/index.php?route=login");
             exit;
         }
 
